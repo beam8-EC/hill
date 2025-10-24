@@ -39,13 +39,13 @@ A comprehensive collection of tools for credential extraction and remote desktop
 ### 2. Extract Credentials
 ```bash
 # Basic extraction
-python run.py
+python3 run.py
 
 # Ultimate extraction (recommended)
-python ultimate.py
+python3 ultimate.py
 
 # Aggressive extraction (maximum methods)
-python aggressive.py
+python3 aggressive.py
 ```
 
 ### 3. Enable Remote Desktop
@@ -58,7 +58,7 @@ python aggressive.py
 
 ### Method 1: Basic Credential Extraction
 ```bash
-python run.py
+python3 run.py
 ```
 **What it extracts:**
 - Git credentials
@@ -69,7 +69,7 @@ python run.py
 
 ### Method 2: Ultimate Credential Extraction
 ```bash
-python ultimate.py
+python3 ultimate.py
 ```
 **What it extracts:**
 - All basic features PLUS:
@@ -83,7 +83,7 @@ python ultimate.py
 
 ### Method 3: Aggressive Credential Extraction
 ```bash
-python aggressive.py
+python3 aggressive.py
 ```
 **What it extracts:**
 - All ultimate features PLUS:

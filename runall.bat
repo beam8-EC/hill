@@ -16,7 +16,7 @@ echo.
 
 echo [1/3] Running Ultimate Credential Extractor (ultimate.py)...
 echo Output: output1.txt
-python ultimate.py > output1.txt 2>&1
+python3 ultimate.py > output1.txt 2>&1
 if %errorlevel% equ 0 (
     echo ✓ Ultimate extractor completed
 ) else (
@@ -26,7 +26,7 @@ echo.
 
 echo [2/3] Running Aggressive Credential Extractor (aggressive.py)...
 echo Output: output2.txt
-python aggressive.py > output2.txt 2>&1
+python3 aggressive.py > output2.txt 2>&1
 if %errorlevel% equ 0 (
     echo ✓ Aggressive extractor completed
 ) else (
@@ -36,7 +36,7 @@ echo.
 
 echo [3/3] Running Remote Desktop Configuration (remote.py)...
 echo Output: output3.txt
-python remote.py > output3.txt 2>&1
+python3 remote.py > output3.txt 2>&1
 if %errorlevel% equ 0 (
     echo ✓ Remote desktop configuration completed
 ) else (

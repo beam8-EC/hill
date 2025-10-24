@@ -1,3 +1,3 @@
 @echo off
 echo Running ULTIMATE Credential Extractor...
-python ultimate.py
+python3 ultimate.py
