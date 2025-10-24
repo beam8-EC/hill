@@ -1,0 +1,128 @@
+REMOTE DESKTOP SETUP GUIDE
+==========================
+
+YOUR PC INFORMATION:
+===================
+Username: Administrator
+Computer Name: DESKTOP-IG9R1CC
+IP Addresses:
+  - Local Network: 192.168.174.128
+  - External IP: 70.39.70.194
+
+MANUAL SETUP INSTRUCTIONS:
+=========================
+
+STEP 1: Enable Remote Desktop (Run as Administrator)
+----------------------------------------------------
+1. Right-click on "This PC" or "My Computer"
+2. Select "Properties"
+3. Click "Advanced system settings"
+4. Go to "Remote" tab
+5. Select "Allow remote connections to this computer"
+6. Click "OK"
+
+OR use Command Prompt as Administrator:
+--------------------------------------
+1. Press Win + X, select "Command Prompt (Admin)" or "PowerShell (Admin)"
+2. Run these commands:
+
+reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f
+
+netsh advfirewall firewall set rule group="Remote Desktop" new enable=yes
+
+net localgroup "Remote Desktop Users" Administrator /add
+
+STEP 2: Configure Windows Firewall
+----------------------------------
+1. Open Windows Defender Firewall
+2. Click "Allow an app or feature through Windows Defender Firewall"
+3. Find "Remote Desktop" and check both "Private" and "Public"
+4. Click "OK"
+
+OR use Command Prompt as Administrator:
+--------------------------------------
+netsh advfirewall firewall set rule group="Remote Desktop" new enable=yes
+
+STEP 3: Set User Password (Important!)
+-------------------------------------
+1. Press Ctrl + Alt + Del
+2. Select "Change a password"
+3. Set a strong password for the Administrator account
+4. This password will be needed for remote connections
+
+STEP 4: Test Remote Desktop
+---------------------------
+1. On another PC, open Remote Desktop Connection (mstsc)
+2. Enter one of these IP addresses:
+   - 192.168.174.128 (for local network)
+   - 70.39.70.194 (for external connection)
+3. Enter username: Administrator
+4. Enter the password you set
+5. Click "Connect"
+
+CONNECTION COMMANDS:
+===================
+For local network connection:
+mstsc /v:192.168.174.128
+
+For external connection:
+mstsc /v:70.39.70.194
+
+TROUBLESHOOTING:
+===============
+If connection fails:
+
+1. Check if Remote Desktop is enabled:
+   - System Properties > Remote tab
+   - Should show "Allow remote connections to this computer"
+
+2. Check Windows Firewall:
+   - Windows Defender Firewall
+   - Allow Remote Desktop through firewall
+
+3. Check user permissions:
+   - User must be in "Remote Desktop Users" group
+   - User must have a password set
+
+4. For external connections:
+   - Configure router port forwarding (port 3389)
+   - Or use VPN for secure connection
+
+5. Try connecting with computer name:
+   mstsc /v:DESKTOP-IG9R1CC
+
+SECURITY RECOMMENDATIONS:
+========================
+1. Change default RDP port (3389) for security
+2. Use strong passwords
+3. Enable Network Level Authentication (NLA)
+4. Consider using VPN for external connections
+5. Regularly update Windows
+6. Monitor connection logs
+
+QUICK SETUP SCRIPT (Run as Administrator):
+=========================================
+Copy and paste this into Command Prompt as Administrator:
+
+@echo off
+echo Enabling Remote Desktop...
+reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f
+echo Configuring Firewall...
+netsh advfirewall firewall set rule group="Remote Desktop" new enable=yes
+echo Adding user to Remote Desktop Users group...
+net localgroup "Remote Desktop Users" Administrator /add
+echo Restarting Remote Desktop services...
+net stop TermService
+net start TermService
+net stop UmRdpService
+net start UmRdpService
+echo Remote Desktop configuration completed!
+echo.
+echo Your PC can now be accessed remotely using:
+echo IP Address: 192.168.174.128 (local network)
+echo IP Address: 70.39.70.194 (external)
+echo Username: Administrator
+echo Port: 3389
+echo.
+echo Make sure to set a strong password for the Administrator account!
+pause
