@@ -50,4 +50,3 @@ echo - Network credentials
 echo - Registry credential entries
 echo - Memory credential dumps
 echo.
-pause

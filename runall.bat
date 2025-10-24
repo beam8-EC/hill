@@ -8,7 +8,6 @@ echo.
 echo WARNING: This tool extracts sensitive credentials from your system.
 echo Only use this tool on systems you own and have permission to access.
 echo.
-pause
 
 echo ========================================
 echo RUNNING ALL PYTHON TOOLS
@@ -59,4 +58,3 @@ echo - All output files contain sensitive information
 echo - Store them securely and delete when no longer needed
 echo - Do not share these files with unauthorized parties
 echo.
-pause

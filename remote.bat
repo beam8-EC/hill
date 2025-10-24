@@ -6,7 +6,6 @@ echo.
 echo This script will enable Remote Desktop on your PC
 echo Make sure you are running this as Administrator!
 echo.
-pause
 
 echo Enabling Remote Desktop...
 reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f
@@ -67,4 +66,3 @@ echo 5. Click Connect
 echo.
 echo For external connections, configure port forwarding on your router.
 echo.
-pause

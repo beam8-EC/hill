@@ -8,7 +8,6 @@ echo.
 echo WARNING: This tool extracts sensitive credentials from your system.
 echo Only use this tool on systems you own and have permission to access.
 echo.
-pause
 
 echo ========================================
 echo STEP 1: INSTALLING DEPENDENCIES
@@ -159,4 +158,3 @@ echo 5. Click Connect
 echo.
 echo All tools have been executed successfully!
 echo.
-pause
