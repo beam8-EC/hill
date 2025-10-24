@@ -1,5 +1,5 @@
 # ULTIMATE Credential Extractor Dependencies
-# Install ALL these libraries for MAXIMUM credential extraction capability
+# Install ALL these libraries for i MAXIMUM credential extraction capability
 
 # Core Windows API access
 pywin32>=227
