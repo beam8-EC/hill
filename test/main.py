@@ -5,6 +5,7 @@ Combines all analyzed projects into one comprehensive tool
 
 import os
 import sys
+import io
 import logging
 import subprocess
 import time
@@ -12,6 +13,12 @@ from datetime import datetime
 from pathlib import Path
 from colorama import init, Fore, Style
 from tqdm import tqdm
+
+# Fix encoding issues on Windows
+if sys.platform == 'win32':
+    # Set console encoding to UTF-8
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
 
 # Import our custom modules
 from password_extractor import PasswordExtractor
@@ -32,7 +39,7 @@ class UnifiedBrowserExtractor:
             level=logging.INFO,
             format='%(asctime)s - %(levelname)s - %(message)s',
             handlers=[
-                logging.FileHandler('extraction.log'),
+                logging.FileHandler('extraction.log', encoding='utf-8'),
                 logging.StreamHandler()
             ]
         )
@@ -92,12 +99,12 @@ class UnifiedBrowserExtractor:
             if passwords:
                 # Save to text file
                 if self.password_extractor.save_passwords_to_file(passwords):
-                    print(f"{Fore.GREEN}✓ Passwords saved to: extracted_passwords.txt")
+                    print(f"{Fore.GREEN}[+] Passwords saved to: extracted_passwords.txt")
                 
                 # Save to CSV for easy analysis
                 self.save_passwords_to_csv(passwords)
                 
-                print(f"{Fore.GREEN}✓ Found {len(passwords)} passwords")
+                print(f"{Fore.GREEN}[+] Found {len(passwords)} passwords")
                 
                 # Show browser breakdown
                 browser_counts = {}
@@ -111,12 +118,12 @@ class UnifiedBrowserExtractor:
                 
                 return True
             else:
-                print(f"{Fore.YELLOW}⚠ No passwords found")
+                print(f"{Fore.YELLOW}[!] No passwords found")
                 return False
                 
         except Exception as e:
             logging.error(f"Error extracting passwords: {e}")
-            print(f"{Fore.RED}✗ Error extracting passwords: {e}")
+            print(f"{Fore.RED}[-] Error extracting passwords: {e}")
             return False
     
     def extract_cookies(self):
@@ -129,13 +136,13 @@ class UnifiedBrowserExtractor:
             if cookies:
                 # Save to text file
                 if self.cookie_extractor.save_cookies_to_file(cookies):
-                    print(f"{Fore.GREEN}✓ Cookies saved to: extracted_cookies.txt")
+                    print(f"{Fore.GREEN}[+] Cookies saved to: extracted_cookies.txt")
                 
                 # Save to JSON for easy import
                 if self.cookie_extractor.save_cookies_to_json(cookies):
-                    print(f"{Fore.GREEN}✓ Cookies saved to: extracted_cookies.json")
+                    print(f"{Fore.GREEN}[+] Cookies saved to: extracted_cookies.json")
                 
-                print(f"{Fore.GREEN}✓ Found {len(cookies)} cookies")
+                print(f"{Fore.GREEN}[+] Found {len(cookies)} cookies")
                 
                 # Show browser breakdown
                 browser_counts = {}
@@ -149,12 +156,12 @@ class UnifiedBrowserExtractor:
                 
                 return True
             else:
-                print(f"{Fore.YELLOW}⚠ No cookies found")
+                print(f"{Fore.YELLOW}[!] No cookies found")
                 return False
                 
         except Exception as e:
             logging.error(f"Error extracting cookies: {e}")
-            print(f"{Fore.RED}✗ Error extracting cookies: {e}")
+            print(f"{Fore.RED}[-] Error extracting cookies: {e}")
             return False
     
     def save_passwords_to_csv(self, passwords):
@@ -177,7 +184,7 @@ class UnifiedBrowserExtractor:
                         'date_last_used': pwd['date_last_used']
                     })
             
-            print(f"{Fore.GREEN}✓ Passwords saved to: extracted_passwords.csv")
+            print(f"{Fore.GREEN}[+] Passwords saved to: extracted_passwords.csv")
             return True
         except Exception as e:
             logging.error(f"Error saving passwords to CSV: {e}")
@@ -208,7 +215,7 @@ class UnifiedBrowserExtractor:
                 f.write("- Keep extracted data secure and delete when no longer needed\n")
                 f.write("=" * 80 + "\n")
             
-            print(f"{Fore.GREEN}✓ Summary report saved to: extraction_summary.txt")
+            print(f"{Fore.GREEN}[+] Summary report saved to: extraction_summary.txt")
             return True
         except Exception as e:
             logging.error(f"Error generating summary report: {e}")
@@ -220,7 +227,7 @@ class UnifiedBrowserExtractor:
         
         # Check admin privileges
         if not self.check_admin_privileges():
-            print(f"{Fore.RED}⚠ WARNING: Not running as administrator")
+            print(f"{Fore.RED}[!] WARNING: Not running as administrator")
             print(f"{Fore.YELLOW}Some extractions may fail without admin privileges")
             print(f"{Fore.YELLOW}Consider running as administrator for best results\n")
         
@@ -248,8 +255,8 @@ class UnifiedBrowserExtractor:
         print(f"\n{Fore.CYAN}{'='*80}")
         print(f"{Fore.GREEN}EXTRACTION COMPLETED SUCCESSFULLY!")
         print(f"{Fore.CYAN}{'='*80}")
-        print(f"{Fore.GREEN}✓ Passwords extracted: {passwords_count}")
-        print(f"{Fore.GREEN}✓ Cookies extracted: {cookies_count}")
+        print(f"{Fore.GREEN}[+] Passwords extracted: {passwords_count}")
+        print(f"{Fore.GREEN}[+] Cookies extracted: {cookies_count}")
         print(f"{Fore.CYAN}{'='*80}")
         print(f"{Fore.YELLOW}Check the generated files for detailed results")
         print(f"{Fore.YELLOW}All files saved in current directory")
